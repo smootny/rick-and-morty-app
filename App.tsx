@@ -6,14 +6,18 @@ import { MainStack } from './src/stacks/Main';
 
 const queryClient = new QueryClient();
 
-function App(): React.JSX.Element {
+import { FavoritesProvider } from './src/contexts/FavoritesContext';
+
+export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <MainStack />
-      </NavigationContainer>
+      <FavoritesProvider>
+        <NavigationContainer>
+          <MainStack />
+        </NavigationContainer>
+      </FavoritesProvider>
     </QueryClientProvider>
   );
 }
 
-export default App;
+

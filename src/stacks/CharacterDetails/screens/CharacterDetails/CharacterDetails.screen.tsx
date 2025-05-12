@@ -4,13 +4,14 @@ import {styles} from './CharacterDetails.styled';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import { CharacterDetailsStackParamList } from '../../CharacterDetails.routes';
 import { MainStackNavigationProp } from '../../../Main/Main.routes';
-
+import { useFavorites } from '../../../../contexts/FavoritesContext';
 const CharacterDetailsScreen = () => {
   const route =
     useRoute<RouteProp<CharacterDetailsStackParamList, 'CharacterDetailsScreen'>>();
   const {character} = route.params;
   const navigation = useNavigation<MainStackNavigationProp>();
-
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const favorite = isFavorite(character.id);
   return (
     <View style={styles.container}>
 
@@ -43,9 +44,13 @@ const CharacterDetailsScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.likeButton}>
-          <Text style={styles.likeButtonText}>☆ ADD TO LIKED</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+  style={styles.likeButton}
+  onPress={() => toggleFavorite(character)}>
+  <Text style={styles.likeButtonText}>
+    {favorite ? '★ REMOVE FROM LIKED' : '☆ ADD TO LIKED'}
+  </Text>
+</TouchableOpacity>
       </View>
     </View>
   );
