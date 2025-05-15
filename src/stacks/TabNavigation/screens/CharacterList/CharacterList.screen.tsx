@@ -3,18 +3,21 @@ import {
   View,
   Text,
   FlatList,
-  Image,
   ActivityIndicator,
-  TouchableOpacity,
   TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import { styles } from './CharacterList.styled';
 import { useNavigation } from '@react-navigation/native';
 import { MainStackNavigationProp } from '../../../Main/Main.routes';
 import { useCharactersQuery } from '../../../Hooks/useCharactersQuery';
 import { Character } from '../../../../Types/Character';
-import Logo from '../../../../../assets/Nav.png';
 import { useDebouncedValue } from '../../../Hooks/useDebouncedValue';
+import CharacterCard from '../../../../components/CharacterCard';
+import SearchIcon from '../../../../../assets/search.png';
+import CancelIcon from '../../../../../assets/cancel.png';
 
 const CharacterListScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,11 +38,11 @@ const CharacterListScreen = () => {
 
   const characters = useMemo(() => {
     if (debouncedSearch.length === 0) return allCharacters;
-  
     return allCharacters.filter(char =>
       char.name.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
   }, [allCharacters, debouncedSearch]);
+
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage && !debouncedSearch) {
       fetchNextPage();
@@ -47,49 +50,40 @@ const CharacterListScreen = () => {
   };
 
   const renderItem = ({ item }: { item: Character }) => (
-    <TouchableOpacity
-      style={styles.card}
+    <CharacterCard
+      character={item}
       onPress={() =>
         navigate('CharacterDetailsStack', {
           screen: 'CharacterDetailsScreen',
           params: { character: item },
         })
-      }>
-      <Image source={{ uri: item.image }} style={styles.avatar} />
-      <View style={styles.info}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.status}>
-          {item.status} • {item.species}
-        </Text>
-      </View>
-    </TouchableOpacity>
+      }
+    />
   );
 
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+
   const ListHeaderComponent = useMemo(() => (
-    <>
-      <Image
-        source={Logo}
-        style={{
-          width: '100%',
-          aspectRatio: 4.5,
-          resizeMode: 'contain',
-          marginBottom: 16,
-        }}
-      />
-      <TextInput
-        placeholder="Search characters..."
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-        style={{
-          backgroundColor: '#eee',
-          borderRadius: 8,
-          paddingHorizontal: 12,
-          paddingVertical: 8,
-          fontSize: 16,
-          marginBottom: 16,
-        }}
-      />
-    </>
+    <View style={localStyles.searchContainer}>
+      <View style={localStyles.searchWrapper}>
+        <Image source={SearchIcon} style={localStyles.searchIcon} />
+        <TextInput
+          placeholder="Search the characters"
+          placeholderTextColor="#666"
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+          style={localStyles.searchInput}
+          returnKeyType="search"
+        />
+        {searchTerm.length > 0 && (
+          <TouchableOpacity onPress={clearSearch} style={localStyles.clearButton}>
+            <Image source={CancelIcon} style={localStyles.clearIcon} />
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
   ), [searchTerm]);
 
   const ListEmptyComponent = useMemo(() => {
@@ -137,5 +131,43 @@ const CharacterListScreen = () => {
     </View>
   );
 };
+
+const localStyles = StyleSheet.create({
+  searchContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  searchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: '#162C1B',
+    height: 48,
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+    tintColor: '#666',
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
+    paddingVertical: 0,
+  },
+  clearButton: {
+    padding: 4,
+  },
+  clearIcon: {
+    width: 16,
+    height: 16,
+    tintColor: '#666',
+  },
+});
 
 export default CharacterListScreen;
