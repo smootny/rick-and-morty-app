@@ -59,17 +59,19 @@ const CharacterDetailsScreen = () => {
           </View>
 
           <TouchableOpacity
-            style={styles.likeToggleButton}
+            style={[styles.likeButton, favorite && styles.likedButton]}
             onPress={handleToggleFavorite}
             activeOpacity={0.9}
           >
-            <Image
-              source={favorite ? FullStar : EmptyStar}
-              style={styles.toggleStarIcon}
-            />
-            <Text style={styles.toggleText}>
-              {favorite ? 'REMOVE FROM LIKED' : 'ADD TO LIKED'}
-            </Text>
+            <View style={styles.likeButtonContent}>
+              <Image
+                source={favorite ? FullStar : EmptyStar}
+                style={styles.starIcon}
+              />
+              <Text style={styles.likeButtonText}>
+                {favorite ? 'REMOVE FROM LIKED' : 'ADD TO LIKED'}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -84,11 +86,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   backButton: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   backText: {
     color: '#162C1B',
-    fontSize: 16,
+    fontSize: 12,
     textDecorationLine: 'underline',
   },
   cardShadow: {
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 1,
     shadowRadius: 0,
-    elevation: 10,
     backgroundColor: 'transparent',
     borderRadius: 24,
   },
@@ -149,31 +150,35 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Inter',
   },
-  likeToggleButton: {
+  likeButton: {
+    backgroundColor: '#162C1B',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 999,
+    alignItems: 'center',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  likedButton: {
+    backgroundColor: '#11B0C8',
+  },
+  likeButtonContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#162C1B',
-    borderRadius: 24,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    width: '100%',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#10331D',
   },
-  toggleStarIcon: {
+  starIcon: {
     width: 16,
     height: 16,
     marginRight: 8,
     tintColor: '#fff',
   },
-  toggleText: {
+  likeButtonText: {
     color: '#fff',
     fontSize: 14,
     fontFamily: 'DMMono',
     textTransform: 'uppercase',
     letterSpacing: 1,
-    fontWeight: '600',
   },
 });
 

@@ -67,6 +67,7 @@ const CharacterListScreen = () => {
 
   const ListHeaderComponent = useMemo(() => (
     <View style={localStyles.searchContainer}>
+       <Text style={localStyles.title}>Characters</Text>
       <View style={localStyles.searchWrapper}>
         <Image source={SearchIcon} style={localStyles.searchIcon} />
         <TextInput
@@ -134,8 +135,8 @@ const CharacterListScreen = () => {
 
 const localStyles = StyleSheet.create({
   searchContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingHorizontal: 6,
+    paddingTop: 18,
     paddingBottom: 16,
   },
   searchWrapper: {
@@ -146,17 +147,18 @@ const localStyles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: '#162C1B',
-    height: 48,
+    height: 36,
   },
   searchIcon: {
-    width: 20,
-    height: 20,
+    width: 14,
+    height: 14,
     marginRight: 8,
     tintColor: '#666',
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
+    fontWeight: '400',
     color: '#000',
     paddingVertical: 0,
   },
@@ -168,6 +170,14 @@ const localStyles = StyleSheet.create({
     height: 16,
     tintColor: '#666',
   },
+  title: {
+    fontSize: 36,
+    fontWeight: '500',
+    marginBottom: 8,
+    color: '#162C1B',
+    fontFamily: 'Inter',
+    letterSpacing: -1,
+  }
 });
 
 export default CharacterListScreen;

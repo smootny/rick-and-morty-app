@@ -62,8 +62,8 @@ const CharacterCard = ({ character, onPress }: Props) => {
 
 const styles = StyleSheet.create({
   cardWrapper: {
-    marginBottom: 24,
-    paddingHorizontal: 16,
+    marginBottom: 20,
+    paddingHorizontal: 6,
   },
   cardShadowWrapper: {
     shadowColor: '#10331D',
@@ -76,23 +76,26 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#F4F6F5',
     borderRadius: 24,
     borderWidth: 2,
     borderColor: '#10331D',
-    padding: 20,
+    padding: 10,
   },
   infoSection: {
     flex: 1,
     justifyContent: 'center',
+    paddingLeft: 6,
+    paddingBottom: 50,
+    gap: 2
   },
   imageSection: {
     marginLeft: 16,
     position: 'relative',
   },
   avatar: {
-    width: 180,
-    height: 180,
+    width: 200,
+    height: 200,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#10331D',
@@ -111,25 +114,28 @@ const styles = StyleSheet.create({
     borderColor: '#10331D',
   },
   starIcon: {
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
     marginRight: 4,
   },
   likeText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
   },
   label: {
     fontSize: 12,
     color: '#555',
-    fontWeight: '600',
+    fontWeight: '500',
     marginTop: 6,
+    fontFamily: 'DDMono',
     textTransform: 'uppercase',
   },
   value: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '400',
     marginBottom: 4,
+    letterSpacing: -1,
+    fontFamily: 'Inter',
     color: '#000',
   },
 });
