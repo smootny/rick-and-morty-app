@@ -1,14 +1,23 @@
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {MainStack} from './src/stacks/Main';
+import { MainStack } from './src/stacks/Main';
 
-function App(): React.JSX.Element {
+const queryClient = new QueryClient();
+
+import { FavoritesProvider } from './src/contexts/FavoritesContext';
+
+export default function App() {
   return (
-    <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <FavoritesProvider>
+        <NavigationContainer>
+          <MainStack />
+        </NavigationContainer>
+      </FavoritesProvider>
+    </QueryClientProvider>
   );
 }
 
-export default App;
+
